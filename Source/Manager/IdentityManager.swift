@@ -490,14 +490,14 @@ public class IdentityManager: IdentityManagerProtocol {
 
      - SeeAlso: `AppLaunchData`
      */
-    public func validate(authCode: String, persistUser: Bool, completion: @escaping NoValueCallback) {
+    public func validate(authCode: String, persistUser: Bool, scopes: [String] = [], completion: @escaping NoValueCallback) {
         self.api.requestAccessToken(
             clientID: self.clientConfiguration.clientID,
             clientSecret: self.clientConfiguration.clientSecret,
             grantType: .authorizationCode,
             code: authCode,
-            // this parameter is useless, but required, otherwise you get "invalid_request" error
-            redirectURI: self.clientConfiguration.redirectBaseURL(withPathComponent: nil).absoluteString
+            redirectURI: self.clientConfiguration.redirectBaseURL(withPathComponent: nil).absoluteString,
+            scope: scopes + ["openid"]
         ) { [weak self] result in
             self?.finishLogin(result: result, persistUser: persistUser, completion: completion)
         }

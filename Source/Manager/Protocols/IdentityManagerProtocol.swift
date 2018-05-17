@@ -39,7 +39,7 @@ public protocol IdentityManagerProtocol: class {
         completion: @escaping NoValueCallback
     )
     ///
-    func validate(authCode: String, persistUser: Bool, completion: @escaping NoValueCallback)
+    func validate(authCode: String, persistUser: Bool, scopes: [String], completion: @escaping NoValueCallback)
 
     ///
     func fetchStatus(for identifier: Identifier, completion: @escaping IdentifierStatusResultCallback)
